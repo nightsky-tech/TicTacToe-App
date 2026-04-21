@@ -8,22 +8,28 @@ public class App {
     public static void main(String[] args) {
         char[][] board = new char[3][3];
 
-        // UC1: Initialize and display board
+        // UC1
         initializeBoard(board);
         printBoard(board);
 
-        // UC2: Toss and assign symbols
+        // UC2
         GameState game = tossAndAssign();
         System.out.println("Player Symbol: " + game.playerSymbol);
         System.out.println("Computer Symbol: " + game.computerSymbol);
         System.out.println("First Turn: " + game.currentPlayer);
 
-        // UC3: Get user input
+        // UC3
         int slot = getUserSlot();
-        System.out.println("User selected slot: " + slot);
+
+        // UC4
+        int[] position = convertSlotToIndex(slot);
+        int row = position[0];
+        int col = position[1];
+
+        System.out.println("Converted Position → Row: " + row + ", Column: " + col);
     }
 
-    // UC1: Initialize board
+    // UC1
     public static void initializeBoard(char[][] board) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -32,7 +38,6 @@ public class App {
         }
     }
 
-    // UC1: Print board
     public static void printBoard(char[][] board) {
         System.out.println("Tic-Tac-Toe Board:");
         for (int i = 0; i < 3; i++) {
@@ -43,7 +48,7 @@ public class App {
         }
     }
 
-    // UC2: Toss and assign symbols
+    // UC2
     public static GameState tossAndAssign() {
         Random rand = new Random();
         GameState game = new GameState();
@@ -63,7 +68,7 @@ public class App {
         return game;
     }
 
-    // UC3: Get user slot input
+    // UC3
     public static int getUserSlot() {
         Scanner sc = new Scanner(System.in);
         int slot;
@@ -81,12 +86,20 @@ public class App {
                 }
             } else {
                 System.out.println("Invalid input! Enter a number.");
-                sc.next(); // clear invalid input
+                sc.next();
             }
         }
     }
 
-    // Game state class
+    // UC4
+    public static int[] convertSlotToIndex(int slot) {
+        int row = (slot - 1) / 3;
+        int col = (slot - 1) % 3;
+
+        return new int[]{row, col};
+    }
+
+    // Game state
     static class GameState {
         char playerSymbol;
         char computerSymbol;
