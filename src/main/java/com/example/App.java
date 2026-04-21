@@ -22,28 +22,22 @@ public class App {
         int slot = getUserSlot();
 
         // UC4
-        int[] position = convertSlotToIndex(slot);
-        int row = position[0];
-        int col = position[1];
-
-        System.out.println("Converted Position → Row: " + row + ", Column: " + col);
+        int[] pos = convertSlotToIndex(slot);
+        System.out.println("Row: " + pos[0] + ", Column: " + pos[1]);
     }
 
     // UC1
     public static void initializeBoard(char[][] board) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
                 board[i][j] = '-';
-            }
-        }
     }
 
     public static void printBoard(char[][] board) {
         System.out.println("Tic-Tac-Toe Board:");
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < 3; j++)
                 System.out.print(board[i][j] + " ");
-            }
             System.out.println();
         }
     }
@@ -71,21 +65,20 @@ public class App {
     // UC3
     public static int getUserSlot() {
         Scanner sc = new Scanner(System.in);
-        int slot;
 
         while (true) {
             System.out.print("Enter slot (1-9): ");
 
             if (sc.hasNextInt()) {
-                slot = sc.nextInt();
+                int slot = sc.nextInt();
 
                 if (slot >= 1 && slot <= 9) {
                     return slot;
                 } else {
-                    System.out.println("Invalid slot! Choose between 1 and 9.");
+                    System.out.println("Invalid slot! Choose 1–9.");
                 }
             } else {
-                System.out.println("Invalid input! Enter a number.");
+                System.out.println("Invalid input!");
                 sc.next();
             }
         }
@@ -95,11 +88,9 @@ public class App {
     public static int[] convertSlotToIndex(int slot) {
         int row = (slot - 1) / 3;
         int col = (slot - 1) % 3;
-
         return new int[]{row, col};
     }
 
-    // Game state
     static class GameState {
         char playerSymbol;
         char computerSymbol;
