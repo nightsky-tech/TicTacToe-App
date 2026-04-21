@@ -18,27 +18,17 @@ public class App {
         System.out.println("Computer Symbol: " + game.computerSymbol);
         System.out.println("First Turn: " + game.currentPlayer);
 
-        String currentPlayer = game.currentPlayer;
-
-        // UC5 with coin flip usage
+        // UC3 + UC4 + UC5
         while (true) {
             int slot = getUserSlot();
             int[] pos = convertSlotToIndex(slot);
+
             int row = pos[0];
             int col = pos[1];
 
             if (isValidMove(board, row, col)) {
-
-                if (currentPlayer.equals("Player")) {
-                    board[row][col] = game.playerSymbol;
-                    System.out.println("Player placed " + game.playerSymbol);
-                } else {
-                    board[row][col] = game.computerSymbol;
-                    System.out.println("Computer placed " + game.computerSymbol);
-                }
-
+                board[row][col] = game.playerSymbol;
                 break;
-
             } else {
                 System.out.println("Invalid move! Try again.");
             }
@@ -86,14 +76,18 @@ public class App {
     // UC3
     public static int getUserSlot() {
         Scanner sc = new Scanner(System.in);
-        int slot;
 
         while (true) {
             System.out.print("Enter slot (1-9): ");
+
             if (sc.hasNextInt()) {
-                slot = sc.nextInt();
-                if (slot >= 1 && slot <= 9) return slot;
-                else System.out.println("Invalid slot! Choose 1–9.");
+                int slot = sc.nextInt();
+
+                if (slot >= 1 && slot <= 9) {
+                    return slot;
+                } else {
+                    System.out.println("Invalid slot! Choose 1–9.");
+                }
             } else {
                 System.out.println("Invalid input!");
                 sc.next();
@@ -103,12 +97,14 @@ public class App {
 
     // UC4
     public static int[] convertSlotToIndex(int slot) {
-        return new int[]{(slot - 1) / 3, (slot - 1) % 3};
+        int row = (slot - 1) / 3;
+        int col = (slot - 1) % 3;
+        return new int[]{row, col};
     }
 
     // UC5
     public static boolean isValidMove(char[][] board, int row, int col) {
-        return (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-');
+        return row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-';
     }
 
     static class GameState {
